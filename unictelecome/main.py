@@ -6,7 +6,7 @@ class unictelecome:
     """
     Send message from unictelecom
     """
-    URL_IP_GSM = "http://cp.uniqtele.com/"
+    __URL_IP_GSM = "http://cp.uniqtele.com/"
 
     def __init__(self, user, apikey, sender, urgent=1, test=0):
         """
@@ -22,14 +22,14 @@ class unictelecome:
         :param test: this message is test or not
         :type test: bool
         """
-        self.apikey = apikey
-        self.user = user
-        self.recipients = None
-        self.message = None
-        self.sender = sender
+        self.__apikey = apikey
+        self.__user = user
+        self.__sender = sender
+        self.__result = None
+        self.__recipients = None
+        self.__message = None
         self.urgent = urgent
         self.test = test
-        self.__result = None
 
     def createmessage(self, recipients=None, message=None):
         """
@@ -42,21 +42,21 @@ class unictelecome:
         :rtype: dict
         """
         if recipients and message:
-            self.recipients = recipients
-            self.message = message
+            self.__recipients = recipients
+            self.__message = message
         arguments = {
             "r": "api/msg_send",
-            "user": self.user,
-            "apikey": self.apikey,
-            "recipients": self.recipients,
-            "message": self.message,
-            "sender": self.sender,
+            "user": self.__user,
+            "apikey": self.__apikey,
+            "recipients": self.__recipients,
+            "message": self.__message,
+            "sender": self.__sender,
             "urgent": int(self.urgent),
             "test": int(self.test)
         }
         return arguments
 
-    def checkstatus(self, data):
+    def __checkstatus(self, data):
         """
         Check result is success send message
         :param data: response from unictelecom dict
@@ -75,9 +75,9 @@ class unictelecome:
         :return: resul of message true or false
         :rtype: bool
         """
-        if (self.recipients and self.message) is False:
+        if (self.__recipients and self.__message) is False:
             raise ValueError("Please set recipients and message.")
         arguments = self.createmessage()
-        result = requests.get(url=self.URL_IP_GSM, params=arguments)
-        self.__result = self.checkstatus(result.text)
+        result = requests.get(url=self.__URL_IP_GSM, params=arguments)
+        self.__result = self.__checkstatus(result.text)
         return self.__result
