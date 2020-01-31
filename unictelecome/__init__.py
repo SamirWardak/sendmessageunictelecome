@@ -1,1 +1,1 @@
-from .main import UnicTelecome
+from .main import unictelecome

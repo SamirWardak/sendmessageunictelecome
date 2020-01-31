@@ -2,20 +2,6 @@ import requests
 import ast
 
 
-def checkstatus(data):
-    """
-    Check result is success send message
-    :param data: response from unictelecom dict
-    :type data: str
-    :return: result True or false
-    :rtype: str
-    """
-    data_dict = ast.literal_eval(data)
-    if data_dict.get("status") == "success":
-        return "Message sended success"
-    raise Exception(f"Message is not sended: {data_dict.get('message')}")
-
-
 class unictelecome:
     """
     Send message from unictelecom
@@ -70,6 +56,19 @@ class unictelecome:
         }
         return arguments
 
+    def checkstatus(self, data):
+        """
+        Check result is success send message
+        :param data: response from unictelecom dict
+        :type data: str
+        :return: result True or false
+        :rtype: str
+        """
+        data_dict = ast.literal_eval(data)
+        if data_dict.get("status") == "success":
+            return "Message sended success"
+        raise Exception(f"Message is not sended: {data_dict.get('message')}")
+
     def sendmessage(self):
         """
         Send message
@@ -80,5 +79,5 @@ class unictelecome:
             raise ValueError("Please set recipients and message.")
         arguments = self.createmessage()
         result = requests.get(url=self.URL_IP_GSM, params=arguments)
-        self.__result = checkstatus(result.text)
+        self.__result = self.checkstatus(result.text)
         return self.__result
