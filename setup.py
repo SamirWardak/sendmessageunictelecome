@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='unictelecomes',
-      version='1.6.3',
+      version='1.6.4',
       url='https://github.com/SamirWardak/sendmessageunictelecome',
       license='MIT',
       author='Wardak Ahmad Samir',

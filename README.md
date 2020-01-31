@@ -14,10 +14,11 @@ create message
 
 `unictelecome.createmessage(message="text", recipients="number_phone")`\
 
-change message priority or if demo envirement
+change message priority
+`unictelecome.urgent = True`
 
-`unictelecome.test = True
-unictelecome.urgent = True`
+for testing message we give result but message not sending to phone
+`unictelecome.test = True`
 
 send message
 `unictelecome.sendmessage()`
