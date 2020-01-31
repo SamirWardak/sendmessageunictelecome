@@ -2,7 +2,21 @@ import requests
 import ast
 
 
-class UnicTelecome:
+def checkstatus(data):
+    """
+    Check result is success send message
+    :param data: response from unictelecom dict
+    :type data: str
+    :return: result True or false
+    :rtype: str
+    """
+    data_dict = ast.literal_eval(data)
+    if data_dict.get("status") == "success":
+        return "Message sended success"
+    raise Exception(f"Message is not sended: {data_dict.get('message')}")
+
+
+class unictelecome:
     """
     Send message from unictelecom
     """
@@ -31,20 +45,7 @@ class UnicTelecome:
         self.test = test
         self.__result = None
 
-    def CheckStatus(self, data):
-        """
-        Check result is success send message
-        :param data: response from unictelecom dict
-        :type data: str
-        :return: result True or false
-        :rtype: str
-        """
-        data_dict = ast.literal_eval(data)
-        if data_dict.get("status") == "success":
-            return "Message sended success"
-        raise Exception(f"Message is not sended: {data_dict.get('message')}")
-
-    def CreateMessage(self, recipients=None, message=None):
+    def createmessage(self, recipients=None, message=None):
         """
         CreateMessage for send
         :param recipients: phone number send sms
@@ -69,7 +70,7 @@ class UnicTelecome:
         }
         return arguments
 
-    def SendMessage(self):
+    def sendmessage(self):
         """
         Send message
         :return: resul of message true or false
@@ -77,7 +78,7 @@ class UnicTelecome:
         """
         if (self.recipients and self.message) is False:
             raise ValueError("Please set recipients and message.")
-        arguments = self.CreateMessage()
+        arguments = self.createmessage()
         result = requests.get(url=self.URL_IP_GSM, params=arguments)
-        self.__result = self.CheckStatus(result.text)
+        self.__result = checkstatus(result.text)
         return self.__result

@@ -2,15 +2,17 @@ Send message from unictelecom provider, this library for send message from unic 
 
 for installation please use
 
-`pip install unictelecome`
+`pip install unictelecomes`
 
 for init library
 
-`unictelecome = UnicTelecome(apikey="api_key", sender="sender", user="user_name")`\
+`from unictelecome import unictelecome`
+
+`unictelecome = unictelecome(apikey="api_key", sender="sender", user="user_name")`\
 
 create message
 
-`unictelecome.CreateMessage(message="text", recipients="number_phone")`\
+`unictelecome.createmessage(message="text", recipients="number_phone")`\
 
 change message priority or if demo envirement
 
@@ -18,6 +20,6 @@ change message priority or if demo envirement
 unictelecome.urgent = True`
 
 send message
-`unictelecome.SendMessage()`
+`unictelecome.sendmessage()`
 
 
